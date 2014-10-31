@@ -27,8 +27,8 @@ def whois(*iplist, **kwargs):
     ipv4_whois_list = list()
     ipv6_whois_list = list()
 
-    # ip4_list and ip6_list has pairs of network range and
-    # the corresponding whois server, however, needs to de-serialize it.
+    # ip4_list and ip6_list have pairs of network range and
+    # the corresponding whois server, however, need to de-serialize them.
     with open("ip4_list") as ipv4_file:
         ipv4_whois_list = list(
             map(lambda pair: [IP(pair[0]), pair[1]],
