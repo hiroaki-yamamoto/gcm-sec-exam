@@ -3,7 +3,7 @@
 
 from nose.tools import *
 from nose.plugins.skip import SkipTest
-from ip2org import whois
+from ip2org import whois, ip2org
 
 
 @raises(ValueError)
@@ -176,3 +176,54 @@ def test_krnic():
     assert_list_equal(list(origin), ["whois.nic.or.kr"])
     orgnames = list(map(lambda e: e.get(e["org_key"]), result))
     assert_list_equal(orgnames, organizations)
+
+
+def test_ip2org():
+    expected_data = [
+        ["173.194.38.0", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.1", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.2", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.3", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.4", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.5", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.6", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.7", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.8", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.9", "Google Inc. (GOGL)", "GOOGLE"],
+        ["173.194.38.14", "Google Inc. (GOGL)", "GOOGLE"],
+        ["27.114.150.10", "Dhivehi Raajjeyge Gulhun (PRIVATE LIMITED)",
+            "DHIVEHINET"],
+        ["27.114.150.11", "Dhivehi Raajjeyge Gulhun (PRIVATE LIMITED)",
+            "DHIVEHINET"],
+        ["27.114.150.12", "Dhivehi Raajjeyge Gulhun (PRIVATE LIMITED)",
+            "DHIVEHINET"],
+        ["146.231.129.86", "Rhodes University", "RHODENT2"],
+        ["41.248.247.207", "", "IP_Static_MarocTelecom"],
+        ["146.231.129.81", "Rhodes University", "RHODENT2"],
+        ["197.80.150.123", "MWEB CONNECT (PROPRIETARY) LIMITED",
+            "MWEB-NET-197-80-150-0"],
+        ["200.89.75.197", "Universidad de Chile", ""],
+        ["200.89.75.198", "Universidad de Chile", ""],
+        ["190.15.141.64", "CEDIA", ""],
+        ["200.1.19.4", "Universidad Tecnica Federico Santa Maria", ""],
+        ["5.34.248.224", "Newsnet AG", "LI-NEWSNETAG-HOSTING"],
+        ["94.23.166.108", "OVH GmbH", "DE-OVH"],
+        ["213.95.21.43", "", "NORIS-STAFF-HOUSING-NET"],
+        ["188.138.75.207", "", "BSB-Service-1"],
+        ["211.120.0.3", "Yahoo Japan Corporation", ""],
+        ["211.130.5.1", "F Bit Communications Corp.", "FBT-08-00001"],
+        ["211.125.255.230", "Oita Cable Telecom Co,.Ltd.", "OCT-NET"],
+        ["222.122.0.5", "Korea Telecom", "KORNET"],
+        ["222.122.10.30", "Korea Telecom", "KORNET"],
+        ["222.122.130.45", "Korea Telecom", "KORNET"]
+        ]
+
+    result_file = "test_ip2org_result.csv"
+    ip2org("tests/data/ips", result_file)
+    
+    result = list()
+    with open(result_file) as fin:
+        import csv
+        result = list(csv.reader(fin))
+    
+    assert_list_equal(result, expected_data, "Unexpected result")

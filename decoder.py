@@ -47,6 +47,7 @@ def decode_arin(telnet_result):
     ret = whois_yaml_like(telnet_result, "^(Comment)")
     ret["whois"] = "arin"
     ret["org_key"] = "Organization"
+    ret["netname_key"] = "NetName"
     return ret
 
 
@@ -54,6 +55,7 @@ def decode_apnic(telnet_result):
     ret = whois_yaml_like(telnet_result, "^(remarks|%)")
     ret["whois"] = "apnic"
     ret["org_key"] = "descr"
+    ret["netname_key"] = "netname"
     return ret
 
 
@@ -61,6 +63,7 @@ def decode_afrinic(telnet_result):
     ret = whois_yaml_like(telnet_result, "^(remarks|%)")
     ret["whois"] = "afrinic"
     ret["org_key"] = "org-name"
+    ret["netname_key"] = "netname"
     return ret
 
 
@@ -75,6 +78,7 @@ def decode_ripe(telnet_result):
     ret = whois_yaml_like(telnet_result, "^(remarks|%)")
     ret["whois"] = "ripe"
     ret["org_key"] = "org-name"
+    ret["netname_key"] = "netname"
     return ret
 
 
@@ -88,14 +92,13 @@ def decode_jpnic(telnet_result):
     for line in lines:
         if pattern.match(line):
             parsed = pattern.split(line)
-            from pprint import pprint
-            pprint(parsed)
             if len(parsed) > 3:
                 ret[parsed[2]] = parsed[3]
             else:
                 ret[parsed[2]] = None
     ret["whois"] = "whois.nic.ad.jp"
     ret["org_key"] = "Organization"
+    ret["netname_key"] = "Network Name"
     return ret
 
 
@@ -117,6 +120,7 @@ def decode_krnic(telnet_result):
     ret = whois_yaml_like(lines)
     ret["whois"] = 'whois.nic.or.kr'
     ret["org_key"] = "Organization Name"
+    ret["netname_key"] = "Service Name"
     return ret
 
 if __name__ == "__main__":

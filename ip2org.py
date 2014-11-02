@@ -111,3 +111,25 @@ def whois(*iplist, **kwargs):
         # If there is no perser, add result as-is.
         ret.append(result)
     return ret
+
+
+def ip2org(ip_fname, out_fname):
+    ips = list()
+    with open(ip_fname, "r") as f_in:
+        ips = [line.rstrip() for line in f_in]
+    data = whois(*ips)
+
+    out = list()
+    for infoIndex in range(0, len(data)):
+        info = data[infoIndex]
+        ip = ips[infoIndex]
+        org_key = info.get("org_key")
+        isp_key = info.get("netname_key")
+        org = info.get(org_key, "") if org_key is not None else ""
+        isp = info.get(isp_key, "") if isp_key is not None else ""
+        out.append([ip, org, isp])
+
+    with open(out_fname, "w+") as f_out:
+        import csv
+        writer = csv.writer(f_out)
+        writer.writerows(out)

@@ -7,3 +7,4 @@ log
 log-*
 log_*
 build
+test_ip2org_result.csv
