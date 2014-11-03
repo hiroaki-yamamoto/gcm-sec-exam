@@ -133,3 +133,15 @@ def ip2org(ip_fname, out_fname):
         import csv
         writer = csv.writer(f_out)
         writer.writerows(out)
+
+
+def main():
+    import sys
+    if len(sys.argv) != 3:
+        print(("Usage: {0} [input file] [output file]").format(sys.argv[0]),
+              file=sys.stderr)
+        exit(1)
+    ip2org(sys.argv[1], sys.argv[2])
+
+if __name__ == "__main__":
+    main()
