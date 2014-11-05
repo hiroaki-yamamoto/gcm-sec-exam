@@ -63,7 +63,8 @@ def whois(*iplist, **kwargs):
                     break
         else:
             raise ValueError(("Unknown IP version: {0}").format(ip.version()))
-
+        if len(whoispair) < 2:
+            raise ValueError("There is no valid whois server.")
         telnet = Telnet(
             server_map.get(whoispair[1]) or whoispair[1], port
         )

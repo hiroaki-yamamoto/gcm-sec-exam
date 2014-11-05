@@ -1,3 +1,4 @@
 nose
 IPy
 PyYAML
+bottle
