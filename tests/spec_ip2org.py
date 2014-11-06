@@ -135,6 +135,7 @@ def test_rwhois_ntt():
     ntt = ["204.0.0.2", "204.1.1.25"]
     whois(*ntt)
 
+
 @raises(ValueError)
 def test_twnic():
     twnic = ["202.39.128.5", "202.39.238.192"]
@@ -220,10 +221,10 @@ def test_ip2org():
 
     result_file = "test_ip2org_result.csv"
     ip2org("tests/data/ips", result_file)
-    
+
     result = list()
     with open(result_file) as fin:
         import csv
         result = list(csv.reader(fin))
-    
+
     assert_list_equal(result, expected_data, "Unexpected result")

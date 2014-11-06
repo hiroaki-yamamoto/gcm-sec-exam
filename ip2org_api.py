@@ -20,7 +20,7 @@ Base.metadata.create_all(bind=engine, checkfirst=True)
 def ip2org_api(address):
     try:
         cache = session.query(Cache).filter(
-            Cache.address==address
+            Cache.address == address
             ).all()
         ret = dict()
         if len(cache) > 0:

@@ -79,7 +79,7 @@ def whois(*iplist, **kwargs):
         if whoispair[1] in ["arin", server_map["arin"]]:
             result = decode_arin(result)
             ref = result.get("ReferralServer")
-            # Sometimes, arin returns ReferralServer to redirect to the 
+            # Sometimes, arin returns ReferralServer to redirect to the
             # corresponding whois...
             if ref:
                 parsed_url = urlparse(ref)
